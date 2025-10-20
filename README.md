@@ -1,1 +1,154 @@
-# chucem2010
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thư 20/10 💌</title>
+<style>
+  :root{
+    --bg1:#ffe9f0; --bg2:#fff0f7; --ink:#5a2a46; --accent:#ff2e88;
+    --paper:#fff7f1; --frame:#ffd6e6;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+  body{overflow:hidden;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--ink)}
+
+  /* ===== icon bay nền ===== */
+  .floaters{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .floater{position:absolute;width:32px;height:32px;opacity:.95;filter:drop-shadow(0 6px 12px rgba(255,120,185,.35));
+    left:var(--x);bottom:-40px;animation:drift var(--dur) linear infinite}
+  @keyframes drift{0%{transform:translateY(0) translateX(0) rotate(0)}
+                   50%{transform:translateY(-55vh) translateX(12vw) rotate(12deg)}
+                   100%{transform:translateY(-110vh) translateX(-8vw) rotate(-8deg)}}
+
+  /* ===== phong bì gọn xinh ở giữa ===== */
+  .stage{position:relative;z-index:1;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+  .scale{transform:scale(.8)}
+  .envelope{width:min(300px,74vw);height:190px;margin:0 auto;perspective:1200px;
+            filter:drop-shadow(0 10px 24px rgba(0,0,0,.12))}
+  .env-body{position:relative;width:100%;height:100%;overflow:hidden;background:linear-gradient(180deg,#ffe0ea,#ffd4e3);
+            border:1px solid var(--frame);border-radius:14px}
+  .flap{position:absolute;inset:0 auto auto 0;width:100%;height:60%;top:0;transform-origin:50% 0%;
+        background:linear-gradient(180deg,#ffc1d6,#ffb0cd);clip-path:polygon(0 0,100% 0,50% 100%);
+        border-top-left-radius:14px;border-top-right-radius:14px;box-shadow:inset 0 -6px 10px rgba(0,0,0,.08)}
+  .seal{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;
+        background:radial-gradient(circle at 30% 30%,#ff8fb3,#e91e63 70%);border:5px solid var(--frame);
+        color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
+  /* khung giấy be + viewport chứa thông điệp */
+  .sheet{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);width:84%;height:75%;
+         background:var(--paper);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.1);
+         display:flex;align-items:stretch;justify-content:center}
+  .viewport{position:relative;inset:auto;flex:1;margin:10px;border-radius:10px;overflow:hidden}
+  .message{
+    position:absolute;left:0;right:0; /* bắt đầu ở dưới, JS sẽ thay biến --start/--end */
+    transform:translateY(var(--start, 100%));
+    padding:6px 12px 16px;
+    font-size:clamp(12px,1.9vw,16px); line-height:1.65; color:#6d2a50;
+  }
+.message h3{margin:.2em 0 .5em;text-align:center;color:var(--accent);font-size:clamp(16px,2.6vw,18px)}
+  .message p{margin:.45em 0}
+  .run .message{animation:scrollUp var(--dur, 22s) linear forwards}
+  @keyframes scrollUp{
+    from{transform:translateY(var(--start))}
+    to  {transform:translateY(var(--end))}
+  }
+
+  /* nút mở */
+  .btn{border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer;
+       background:#ffffffc8;color:#7a2e4d;backdrop-filter:blur(6px);box-shadow:0 8px 18px rgba(0,0,0,.12)}
+  .btn:active{transform:translateY(1px)}
+
+  /* animation mở nắp */
+  .open .flap{animation:flip 1.1s ease forwards}
+  @keyframes flip{0%{transform:rotateX(0)}60%{transform:rotateX(-170deg)}100%{transform:rotateX(-180deg)}}
+  .open .seal{animation:pop .45s ease forwards}
+  @keyframes pop{to{transform:translate(-50%,-200%) scale(0)}}
+</style>
+</head>
+<body>
+
+  <!-- icon bay nền -->
+  <div class="floaters" id="floaters"></div>
+
+  <!-- phong bì -->
+  <div class="stage" id="stage">
+    <div class="scale">
+      <div class="envelope" id="envelope">
+        <div class="env-body">
+          <div class="flap"></div>
+          <div class="seal">💮</div>
+
+          <!-- giấy be & viewport chứa thông điệp -->
+          <div class="sheet">
+            <div class="viewport" id="viewport">
+              <div class="message" id="message">
+                <h3>💐 Chúc Mừng Tuyết Anh Ngày 20/10 💐</h3>
+                <p>Nhân dịp Ngày Phụ Nữ Việt Nam 20/10, chúc <b>Tuyết Anh</b> một ngày thật vui vẻ, ý nghĩa và đong đầy những điều tốt đẹp.</p>
+                <p>Chúc em luôn giữ được nụ cười rạng rỡ, sự tự tin và năng lượng tích cực vốn có. Hãy luôn mạnh mẽ, xinh đẹp và là nguồn cảm hứng cho những người xung quanh nhé.</p>
+                <p>Anh chúc em sẽ luôn thành công trên con đường mình chọn, gặt hái được nhiều thành tựu xứng đáng với sự nỗ lực của bản thân. Và đừng quên yêu thương chính mình, tận hưởng mọi khoảnh khắc tuyệt vời của cuộc sống.</p>
+                <p><b>Mọi điều tốt đẹp nhất sẽ đến với em!</b> 💖</p>
+                <p style="text-align:right;margin-top:.6em;color:#b0136a;font-weight:700">— Gửi em 💞</p>
+              </div>
+            </div>
+          </div>
+          <!-- /sheet -->
+
+        </div>
+      </div>
+    </div>
+    <button class="btn" id="openBtn">Mở thư của em 💌</button>
+  </div>
+
+<script>
+/* ===== icon bay (Twemoji CDN) ===== */
+const ICONS=[
+ "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2764.svg",
+ "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f339.svg",
+ "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f33c.svg",
+ "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f337.svg"
+];
+const floaters=document.getElementById('floaters');
+function spawnIcon(){
+const d=document.createElement('img');
+  d.className='floater';
+  d.src=ICONS[Math.floor(Math.random()*ICONS.length)];
+  d.style.setProperty('--x', Math.random()*100+'vw');
+  d.style.setProperty('--dur', (10+Math.random()*12)+'s');
+  floaters.appendChild(d); setTimeout(()=>d.remove(),14000);
+}
+for(let i=0;i<18;i++) setTimeout(spawnIcon,i*350);
+setInterval(spawnIcon,900);
+
+/* ===== logic: mở nắp rồi cuộn nội dung bên TRONG giấy be ===== */
+const openBtn=document.getElementById('openBtn');
+const envelope=document.getElementById('envelope');
+const viewport=document.getElementById('viewport');
+const message=document.getElementById('message');
+
+function startScroll(){
+  // Bắt đầu từ dưới khung → kết thúc khi đoạn văn vừa lên hết
+  const start = viewport.clientHeight; // px
+  const end = Math.min(0, viewport.clientHeight - message.scrollHeight); // âm hoặc 0
+  const dur = Math.max(16, Math.min(38, 14 + message.scrollHeight/28)); // 16–38s
+  message.style.setProperty('--start', start+'px');
+  message.style.setProperty('--end',   end+'px');
+  message.style.setProperty('--dur',   dur+'s');
+  viewport.classList.add('run');
+}
+
+openBtn.addEventListener('click', ()=>{
+  envelope.classList.add('open');
+  // khi nắp mở xong thì bắt đầu cuộn text
+  const flap = envelope.querySelector('.flap');
+  flap.addEventListener('animationend', startScroll, {once:true});
+});
+
+// responsive: nếu xoay màn hình => tính lại end và phát lại từ đầu
+addEventListener('resize', ()=>{
+  viewport.classList.remove('run');
+  message.style.transform='translateY(100%)';
+  setTimeout(startScroll,150);
+});
+</script>
+</body>
+</html>
