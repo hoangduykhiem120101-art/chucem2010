@@ -1,0 +1,19 @@
+const message=document.getElementById('message');
+
+function startScroll(){
+  const start=viewport.clientHeight;
+  const end=Math.min(0,viewport.clientHeight-message.scrollHeight);
+  const dur=Math.max(16,Math.min(38,14+message.scrollHeight/28));
+  message.style.setProperty('--start',start+'px');
+  message.style.setProperty('--end',end+'px');
+  message.style.setProperty('--dur',dur+'s');
+  viewport.classList.add('run');
+}
+
+openBtn.addEventListener('click',()=>{
+  envelope.classList.add('open');
+  envelope.querySelector('.flap').addEventListener('animationend',startScroll,{once:true});
+});
+</script>
+</body>
+</html>
